@@ -37,7 +37,7 @@ pip install pykeepass python-telegram-bot pypiwin32
 
 Verify installation
 ```sh
-python \library\verify_installation.py
+python library\verify_installation.py
 ```
 
 Error:

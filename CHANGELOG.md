@@ -17,6 +17,7 @@ Also consult [here](https://github.com/markdown-it/markdown-it/edit/master/CHANG
 ## [1.0.2] - 2022-01-26
 ### Initial commit
 - Added to GitHub repository
+- Type on README file
 
 ## [1.0.1] - 2022-01-25
 ### Add
