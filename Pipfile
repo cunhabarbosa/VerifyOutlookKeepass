@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pykeepass = "==4.0.1"
+python-telegram-bot = "==13.10"
+pywin32 = "==303"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
