@@ -4,8 +4,8 @@ Check if all my email accounts in the Keepass file are configured in Microsoft O
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cunhabarbosa/VerifyOutlookKeepass/main)
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/cunhabarbosa/VerifyOutlookKeepass)
-![GitHub](https://img.shields.io/github/license/cunhabarbosa/VerifyOutlookKeepass)
-![GitHub Repo stars](https://img.shields.io/github/stars/cunhabarbosa/VerifyOutlookKeepass?style=social)
+[![GitHub license](https://img.shields.io/github/license/cunhabarbosa/VerifyOutlookKeepass)](https://github.com/cunhabarbosa/VerifyOutlookKeepass/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/cunhabarbosa/VerifyOutlookKeepass)](https://github.com/cunhabarbosa/VerifyOutlookKeepass/stargazers)
 
 ## Algorithm
 - Open KeePass file in Documents folder
