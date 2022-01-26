@@ -3,6 +3,8 @@
 Check if all my email accounts in the Keepass file are configured in Microsoft Outlook and send the result via Telegram
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cunhabarbosa/VerifyOutlookKeepass/main)
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/cunhabarbosa/VerifyOutlookKeepass)
+![GitHub](https://img.shields.io/github/license/cunhabarbosa/VerifyOutlookKeepass)
 ![GitHub Repo stars](https://img.shields.io/github/stars/cunhabarbosa/VerifyOutlookKeepass?style=social)
 
 ## Algorithm
