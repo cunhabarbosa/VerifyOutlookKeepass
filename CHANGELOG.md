@@ -8,11 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Also consult [here](https://github.com/markdown-it/markdown-it/edit/master/CHANGELOG.md).
 
 ## [Unreleased]
-- Improve docstring documentation
-- Improve list of entries to ignore via settings file
-- Add this script to GitHub repository
 - Create exe file (using [(conda) Constructor](https://github.com/conda/constructor))
 
+## [1.1.0] - 2022-01-30
+- Improve list of entries to ignore via settings file
+- Improve docstring documentation
+- Small changes and fixes
+- Updated settings_example.ini file
 
 ## [1.0.2] - 2022-01-26
 ### Initial commit

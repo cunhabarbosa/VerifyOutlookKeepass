@@ -3,9 +3,7 @@ Check if all my email accounts in the Keepass file are configured in Microsoft O
 
 Author: Antonio Barbosa
 E-mail: cunha.barbosa@gmail.com
-Version: [1.0.0] - 2022-01-25
 """
-
 import os
 import sys
 from pykeepass import PyKeePass
@@ -26,6 +24,7 @@ keepass_directory = config_object['KEEPASS_FILE']['KEEPASS_DIRECTORY']
 keepass_filename = config_object['KEEPASS_FILE']['KEEPASS_FILENAME']
 keepass_password = config_object['KEEPASS_FILE']['KEEPASS_PASSWORD']
 keepass_group = config_object['KEEPASS_FILE']['KEEPASS_DB_GROUP']
+keepass_ignore_list = list(config_object['KEEPASS_FILE']['IGNORE_LIST'].split(','))
 
 # Telegram info
 telegram_token = config_object['TELEGRAM_INFO']['telegram_token']
@@ -34,49 +33,76 @@ telegram_chat_id = config_object['TELEGRAM_INFO']['telegram_chat_id']
 
 def load_database(dir_name, base_filename, pass_filename):
     """
-    Load database
-    :return:
+    Load database from Keepass file
+    :param dir_name: Directory where the file is located
+    :param base_filename: Name of file (must include filename extension)
+    :param pass_filename: Password
+    :return: Link to Keepass file
+    :rtype: pykeepass.pykeepass.PyKeePass
     """
-    filename = os.path.join(dir_name, base_filename)
-    print(filename)
+    # @todo: Set default values and validate input arguments
+    # @todo: Implement try-except
 
-    kp = PyKeePass(filename, password=pass_filename)
+    # pass_filename = "asd"
+    try:
+        filename = os.path.join(dir_name, base_filename)
+        print(filename)
+
+        kp = PyKeePass(filename, password=pass_filename)
+    except Exception as error_load_database:
+        raise error_load_database
+
     return kp
 
 
 def find_group(kp_db=None, name_db='email', first_db=True):
     """
-    Find any group by its name
-    :param kp_db:
-    :param name_db:
-    :param first_db:
-    :return:
+    Search for a group by its name
+    :param kp_db: Link to Keepass file
+    :param name_db: Name of group
+    :param first_db: Returns the first result or all results
+    :return: Link to a specific group
+    :rtype: pykeepass.group.Group
     """
     if kp_db is None:
         raise "Database not defined"
+    # @todo: Validate input arguments
+    # @todo: Implement try-except
 
-    return kp_db.find_groups(name=name_db, first=first_db)
+    try:
+        kp_group = kp_db.find_groups(name=name_db, first=first_db)
+    except Exception as error_find_group:
+        raise error_find_group
+
+    return kp_group
 
 
 def find_entries(kp_group = None):
     """
-    Get the entries in a group
-    :param kp_group:
+    Get the entries in a group, like this:
+    Entry: "AntonioB/email/Gmail - username1 (username1@gmail.com)"
+    Entry: "AntonioB/email/Gmail - username2 (username2@gmail.com)"
+    Entry: "AntonioB/email/Gmail - username3 (username3@gmail.com)"
+    :param kp_group: Name of group
+    :return: List of existing entries
+    :rtype: list
     """
     if kp_group is None:
         raise "Group not defined"
-    kp_entries = group.entries
+
+    try:
+        kp_entries = group.entries
+    except Exception as error_find_entries:
+        raise error_find_entries
     # print(*entries, sep = "\n")   # Print all entries
-    # Entry: "AntonioB/email/FEUP - cunha.barbosa (ei03023@fe.up.pt)"
-    # Entry: "AntonioB/email/Gmail - acbarbosamail (acbarbosamail@gmail.com)"
-    # Entry: "AntonioB/email/Gmail - antoniocunhabarbosa (antoniocunhabarbosa@gmail.com)"
     return kp_entries
 
 
 def email_entries_outlook():
     """
-
-    :return:
+    Get from the Microsoft Outlook program the list of emails that are configured
+    :return: Configured email list
+    :rtype: list
     """
     email_list = []
     try:
@@ -87,17 +113,19 @@ def email_entries_outlook():
             email_account: object = account.DeliveryStore.DisplayName
             # print(email_account)
             email_list.append(email_account)
-    except Exception as e:
-        raise e
+    except Exception as error_email_entries_outlook:
+        raise error_email_entries_outlook
 
     return email_list
 
 
 def check_entries_outlook(list_outlook, list_keepass):
     """
-    Check
-    :param list_outlook:
-    :param list_keepass:
+    Checks if list_keepass exists in list_outlook
+    :param list_outlook: List of emails configured in Microsoft Outlook
+    :param list_keepass: List of existing emails in Keepass file
+    :return Keepass list with results
+    :rtype: list
     """
     if list_outlook is None and list_keepass is None:
         raise "One of the lists is None"
@@ -109,6 +137,7 @@ def check_entries_outlook(list_outlook, list_keepass):
         # print(f"{message}!")
         result_outlook.append(message_outlook)
 
+    print(type(result_outlook))
     return result_outlook
 
 
@@ -116,27 +145,29 @@ if __name__ == '__main__':
     initial_time = benchmark.benchmark_ini()  # Begin benchmark
 
     # --- Read the existing entries in the Keepass file ---
-    database = load_database(keepass_directory, keepass_filename, keepass_password)
-    group = find_group(database, keepass_group)
-    entries = find_entries(group)
+    entries=[]
+    try:
+        database = load_database(keepass_directory, keepass_filename, keepass_password)
+        group = find_group(database, keepass_group)
+        entries = find_entries(group)
+    except Exception as error:
+        print(error)
 
     my_email_list = []
     for entry in entries:
-        # Entry: "AntonioB/email/FEUP - cunha.barbosa (ei03023@fe.up.pt)"
-        # Title:
-        # Username: "ei03023@fe.up.pt
-        title = entry.title  # FEUP - cunha.barbosa
-        title_sub = title.split(" - ", 1)[0]  # FEUP
+        # Entry: "AntonioB/email/Gmail - username (username@gmail.com)"
+        # Title: "Gmail - username"
+        # Username: "username@gmail.com"
+        title = entry.title  # Gmail - username
+        title_sub = title.split(" - ", 1)[0]  # Gmail
         username = entry.username
         try:
-            title_user = title.split(" - ", 1)[1]  # cunha.barbosa
+            title_user = title.split(" - ", 1)[1]  # username
         except (Exception,):
             pass
 
-        # todo: Definition
         # If the entry is in ignore list, move on to the next
-        email_not_to_check = ['Clix', 'Google Account', 'INESCTEC', 'Live ID'
-                            , 'Microsoft Account', 'Office365', 'Mail.ru', 'ProtonMail']
+        email_not_to_check = keepass_ignore_list
         if any(title_sub in string for string in email_not_to_check):
             continue
 
@@ -157,7 +188,7 @@ if __name__ == '__main__':
     # --- Compare both lists ---
     message = "My list of emails: \n"
     for i in outlook_existences:
-        email = i.split(" : ", 1)[0]  # cunha_barbosa@outlook.pt
+        email = i.split(" : ", 1)[0]  # username@gmail.com
         result = i.split(" : ", 1)[1]  # False
 
         if result == 'True':
