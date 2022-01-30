@@ -115,6 +115,7 @@ def check_entries_outlook(list_outlook, list_keepass):
 if __name__ == '__main__':
     initial_time = benchmark.benchmark_ini()  # Begin benchmark
 
+    # --- Read the existing entries in the Keepass file ---
     database = load_database(keepass_directory, keepass_filename, keepass_password)
     group = find_group(database, keepass_group)
     entries = find_entries(group)
@@ -133,7 +134,8 @@ if __name__ == '__main__':
             pass
 
         # todo: Definition
-        email_not_to_check = ['Clix', 'FEUP', 'Google Account', 'INESCTEC', 'Live ID'
+        # If the entry is in ignore list, move on to the next
+        email_not_to_check = ['Clix', 'Google Account', 'INESCTEC', 'Live ID'
                             , 'Microsoft Account', 'Office365', 'Mail.ru', 'ProtonMail']
         if any(title_sub in string for string in email_not_to_check):
             continue
@@ -142,8 +144,8 @@ if __name__ == '__main__':
 
     my_email_list.sort()
 
-    # Scan emails configured in Microsoft Outlook
-    outlook_existences = None
+    # --- Scan emails configured in Microsoft Outlook ---
+    outlook_existences = ()
     try:
         outlook_entries = email_entries_outlook()
         outlook_existences = check_entries_outlook(outlook_entries, my_email_list)
@@ -152,6 +154,7 @@ if __name__ == '__main__':
         print(e)
         exit(-1)
 
+    # --- Compare both lists ---
     message = "My list of emails: \n"
     for i in outlook_existences:
         email = i.split(" : ", 1)[0]  # cunha_barbosa@outlook.pt
