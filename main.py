@@ -137,7 +137,6 @@ def check_entries_outlook(list_outlook, list_keepass):
         # print(f"{message}!")
         result_outlook.append(message_outlook)
 
-    print(type(result_outlook))
     return result_outlook
 
 
