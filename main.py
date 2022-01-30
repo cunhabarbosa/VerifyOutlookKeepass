@@ -133,7 +133,7 @@ if __name__ == '__main__':
             pass
 
         # todo: Definition
-        email_not_to_check = ['Clix', 'FEUP', 'Google Account', 'Google Apps', 'INESCTEC', 'Live ID'
+        email_not_to_check = ['Clix', 'FEUP', 'Google Account', 'INESCTEC', 'Live ID'
                             , 'Microsoft Account', 'Office365', 'Mail.ru', 'ProtonMail']
         if any(title_sub in string for string in email_not_to_check):
             continue
@@ -142,9 +142,15 @@ if __name__ == '__main__':
 
     my_email_list.sort()
 
-    outlook_entries = email_entries_outlook()
-    outlook_existences = check_entries_outlook(outlook_entries, my_email_list)
-    # print(*outlook_entries, sep='\n')
+    # Scan emails configured in Microsoft Outlook
+    outlook_existences = None
+    try:
+        outlook_entries = email_entries_outlook()
+        outlook_existences = check_entries_outlook(outlook_entries, my_email_list)
+        # print(*outlook_entries, sep='\n')
+    except Exception as e:
+        print(e)
+        exit(-1)
 
     message = "My list of emails: \n"
     for i in outlook_existences:
