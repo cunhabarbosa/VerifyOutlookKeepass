@@ -3,7 +3,7 @@ Library for measuring the execution time of a script
 
 Author: Antonio Barbosa
 E-mail: cunha.barbosa@gmail.com
-Version: 2021-07-29
+Version: 2022-01-31
 """
 
 import time
@@ -20,7 +20,7 @@ from datetime import datetime, timedelta
 # Output: Time in seconds since the epoch
 # Execution: initial_time = benchmark.benchmark_ini()
 # Help: https://docs.python.org/3/library/time.html#time.time
-def benchmark_ini():
+def benchmark_ini() -> time:
     """
     Start the benchmark in a script
     :return: Current time
@@ -35,7 +35,7 @@ def benchmark_ini():
 # Input: initial time
 # Output: none
 # Execution: benchmark.benchmark_end(initial_time, sys.argv[0])
-def benchmark_end(start, name_script):
+def benchmark_end(start: float, name_script: str) -> None:
     """
     Stop the benchmark in a script and present the name of the script
     :param float start: Initial datetime

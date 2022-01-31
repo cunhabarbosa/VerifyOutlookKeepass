@@ -3,7 +3,7 @@ Check if the python environment has the libraries correctly installed
 
 Author: Antonio Barbosa
 E-mail: cunha.barbosa@gmail.com
-Version: 2022-01-25
+Version: 2022-01-31
 
 HELP:
 Generate requirements.txt file for any project based on imports
@@ -16,7 +16,7 @@ Check packages installed in environment
 import pkg_resources
 
 
-def check_dependencies(dependencies):
+def check_dependencies(dependencies: list) -> None:
     """ Verifies that the work environment has all installed libraries to the proper functioning """
     # dependencies can be any iterable with strings,
     # e.g. file line-by-line iterator

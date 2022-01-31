@@ -3,14 +3,14 @@ Library to access the Telegram platform
 
 Author: Antonio Barbosa
 E-mail: cunha.barbosa@gmail.com
-Version: 2022-01-25
+Version: 2022-01-31
 """
 import telegram
 
 
 # https://medium.com/@mycodingblog/get-telegram-notification-when-python-script-finishes-running-a54f12822cdc
 
-def notify_telegram(token, chat_id, telegram_message):
+def notify_telegram(token: str, chat_id: str, telegram_message: str) -> None:
     """
     Send message via Telegram
     :param str token: Authentication token for sending messages

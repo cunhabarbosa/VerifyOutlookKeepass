@@ -10,6 +10,10 @@ Also consult [here](https://github.com/markdown-it/markdown-it/edit/master/CHANG
 ## [Unreleased]
 - Create exe file (using [(conda) Constructor](https://github.com/conda/constructor))
 
+## [1.1.1] - 2022-01-31
+- Implement [typing - support for type hints](https://docs.python.org/3/library/typing.html) 
+
+
 ## [1.1.0] - 2022-01-30
 - Improve list of entries to ignore via settings file
 - Improve docstring documentation

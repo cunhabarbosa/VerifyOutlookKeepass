@@ -31,12 +31,12 @@ telegram_token = config_object['TELEGRAM_INFO']['telegram_token']
 telegram_chat_id = config_object['TELEGRAM_INFO']['telegram_chat_id']
 
 
-def load_database(dir_name, base_filename, pass_filename):
+def load_database(dir_name: str, base_filename: str, pass_filename: str) -> PyKeePass:
     """
     Load database from Keepass file
-    :param dir_name: Directory where the file is located
-    :param base_filename: Name of file (must include filename extension)
-    :param pass_filename: Password
+    :param str dir_name: Directory where the file is located
+    :param str base_filename: Name of file (must include filename extension)
+    :param str pass_filename: Password
     :return: Link to Keepass file
     :rtype: pykeepass.pykeepass.PyKeePass
     """
@@ -55,12 +55,12 @@ def load_database(dir_name, base_filename, pass_filename):
     return kp
 
 
-def find_group(kp_db=None, name_db='email', first_db=True):
+def find_group(kp_db: PyKeePass = None, name_db: str ='email', first_db: bool =True) -> PyKeePass.groups:
     """
     Search for a group by its name
-    :param kp_db: Link to Keepass file
-    :param name_db: Name of group
-    :param first_db: Returns the first result or all results
+    :param PyKeePass kp_db: Link to Keepass file
+    :param str name_db: Name of group
+    :param bool first_db: Returns the first result or all results
     :return: Link to a specific group
     :rtype: pykeepass.group.Group
     """
@@ -77,15 +77,15 @@ def find_group(kp_db=None, name_db='email', first_db=True):
     return kp_group
 
 
-def find_entries(kp_group = None):
+def find_entries(kp_group: PyKeePass.groups = None) -> list[PyKeePass.groups]:
     """
     Get the entries in a group, like this:
     Entry: "AntonioB/email/Gmail - username1 (username1@gmail.com)"
     Entry: "AntonioB/email/Gmail - username2 (username2@gmail.com)"
     Entry: "AntonioB/email/Gmail - username3 (username3@gmail.com)"
-    :param kp_group: Name of group
+    :param PyKeePass.groups kp_group: Name of group
     :return: List of existing entries
-    :rtype: list
+    :rtype: list[PyKeePass.groups]
     """
     if kp_group is None:
         raise "Group not defined"
@@ -98,11 +98,11 @@ def find_entries(kp_group = None):
     return kp_entries
 
 
-def email_entries_outlook():
+def email_entries_outlook() -> list[object]:
     """
     Get from the Microsoft Outlook program the list of emails that are configured
     :return: Configured email list
-    :rtype: list
+    :rtype: list[object]
     """
     email_list = []
     try:
@@ -119,13 +119,13 @@ def email_entries_outlook():
     return email_list
 
 
-def check_entries_outlook(list_outlook, list_keepass):
+def check_entries_outlook(list_outlook: list[object], list_keepass: list[str]) -> list[str]:
     """
     Checks if list_keepass exists in list_outlook
-    :param list_outlook: List of emails configured in Microsoft Outlook
-    :param list_keepass: List of existing emails in Keepass file
+    :param list[object] list_outlook: List of emails configured in Microsoft Outlook
+    :param list[str] list_keepass: List of existing emails in Keepass file
     :return Keepass list with results
-    :rtype: list
+    :rtype: list[str]
     """
     if list_outlook is None and list_keepass is None:
         raise "One of the lists is None"
